@@ -18,11 +18,28 @@ if (!empty($_POST)) {
 		$error['password'] = 'blank';
 	}
 
+	//ファイルの拡張子チェック
+	$fileName = $_FILES['image']['name'];
+	if (!empty($fileName)){
+		$ext = substr($fileName,-3);
+		if ($ext != 'jpg' && $ext !='gif' && $ext !='png') {
+			$error['image'] = 'type';
+		}
+	}
+
+	var_dump($error);
+	var_dump($_FILES);
+
 	//正常に入力されていたら
 	if (empty($error)) {
+		//画像をアップロードする
+		$image = date('YmdHis').$_FILES['image']['name'];
+		move_uploaded_file($_FILES['image']['tmp_name'],'../member_picture/'.$image);
+
 		$_SESSION['join'] = $_POST;
+		$_SESSION['join']['image'] = $image;
 		//画面遷移
-		header('Location: check.php');
+		//header('Location: check.php');
 		exit();
 	}
 
