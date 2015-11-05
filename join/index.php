@@ -27,8 +27,8 @@ if (!empty($_POST)) {
 		}
 	}
 
-	var_dump($error);
-	var_dump($_FILES);
+	//var_dump($error);
+	//var_dump($_FILES);
 
 	//正常に入力されていたら
 	if (empty($error)) {
@@ -39,8 +39,18 @@ if (!empty($_POST)) {
 		$_SESSION['join'] = $_POST;
 		$_SESSION['join']['image'] = $image;
 		//画面遷移
-		//header('Location: check.php');
+		header('Location: check.php');
 		exit();
+	}
+
+	//書き直し
+	if($_REQEST['action'] == 'rewrite'){
+		$_POST = $_SESSION['join'];
+		$error['rewrite'] = true;
+	}else{
+		$_POST['name'] = '';
+		$_POST['email'] = '';
+		$_POST['password'] = '';
 	}
 
 }
