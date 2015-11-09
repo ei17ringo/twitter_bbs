@@ -8,6 +8,26 @@ if(!isset($_SESSION['join'])){
 	header('Location :index.php');
 }
 
+//ボタンが押されてPOST送信でデータが送られてきた時
+if (!empty($_POST)) {
+	// 登録処理をする
+	$sql = sprintf('INSERT INTO members SET name="%s", email="%s",password="%s", picture="%s", created="%s"',
+		mysqli_real_escape_string($db, $_SESSION['join']['name']),
+		mysqli_real_escape_string($db, $_SESSION['join']['email']),
+		mysqli_real_escape_string($db, sha1($_SESSION['join']['password'])),
+		mysqli_real_escape_string($db, $_SESSION['join']['image']),
+		date('Y-m-d H:i:s')
+	);
+	mysqli_query($db, $sql) or die(mysqli_error($db));
+	
+	//SESSION変数の破棄
+	unset($_SESSION['join']);
+
+	//画面遷移
+	header('Location: thanks.php');
+	exit();
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
