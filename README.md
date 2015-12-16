@@ -17,8 +17,8 @@ POST送信されているか、されていないかで存在の有無が変わ�
     $name=''; //初期値に空文字を代入しておく
     
     //isset関数で存在を確認し、存在した時だけ代入処理
-    if (isset($_POST['name])){
-      $name = $_POST['name];
+    if (isset($_POST['name'])){
+      $name = $_POST['name'];
     }
     
     //表示する時は、自分で定義した変数を使用
